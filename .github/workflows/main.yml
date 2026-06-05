@@ -21,7 +21,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.MY_KEY }}
 
-          source: "app,bootstrap,config,database,public,resources,routes,artisan,composer.json,composer.lock"
+          source: "."
 
           target: "/opt/lampp/htdocs"
 
