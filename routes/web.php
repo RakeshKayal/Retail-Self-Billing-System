@@ -18,6 +18,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
 // Protected routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
