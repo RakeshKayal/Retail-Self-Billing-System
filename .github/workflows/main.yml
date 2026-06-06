@@ -21,7 +21,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.MY_KEY }}
           source: "."
-          target: "/home/ubuntu/htdocs"
+          target: "/opt/lampp/htdocs/"
 
       # - name: Move files to XAMPP
       #   uses: appleboy/ssh-action@v1.0.3
