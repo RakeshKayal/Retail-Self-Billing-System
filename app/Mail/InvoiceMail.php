@@ -20,6 +20,10 @@ class InvoiceMail extends Mailable
 
     public function build()
     {
+        // Ensure related models are loaded so blade can access product names when the
+        // mailable is serialized or queued.
+        $this->bill->loadMissing(['items.product', 'user']);
+
         return $this->subject('Your Purchase Invoice')
                     ->view('emails.invoice')
                     ->with([

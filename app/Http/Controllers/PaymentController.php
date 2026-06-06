@@ -172,6 +172,18 @@ class PaymentController extends Controller
             // Send invoice email to customer
             try {
                 $bill = Bill::with(['items.product', 'user'])->find($bill->id);
+                // Ensure each item has the `product` relation set — some environments
+                // may not correctly infer relations when primary keys use non-standard
+                // names, so explicitly attach the product model.
+                if ($bill && $bill->items) {
+                    foreach ($bill->items as $item) {
+                        $product = \App\Models\Product::find($item->product_id);
+                        if ($product) {
+                            $item->setRelation('product', $product);
+                        }
+                    }
+                }
+
                 if ($bill && $bill->user && $bill->user->email) {
                     Mail::to($bill->user->email)->send(new InvoiceMail($bill));
                 }
@@ -275,6 +287,14 @@ class PaymentController extends Controller
             // Send invoice email to customer if available
             try {
                 $bill = Bill::with(['items.product', 'user'])->find($bill->id);
+                if ($bill && $bill->items) {
+                    foreach ($bill->items as $item) {
+                        $product = \App\Models\Product::find($item->product_id);
+                        if ($product) {
+                            $item->setRelation('product', $product);
+                        }
+                    }
+                }
                 if ($bill && $bill->user && $bill->user->email) {
                     Mail::to($bill->user->email)->send(new InvoiceMail($bill));
                 }

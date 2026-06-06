@@ -24,6 +24,9 @@ class BillItem extends Model
     // Each item belongs to a product
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        // Product model uses a non-default primary key name (`product_id`),
+        // so explicitly specify the foreign key and owner key to avoid
+        // Eloquent inferring `product_product_id` as the foreign key.
+        return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
 }
