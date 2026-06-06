@@ -21,14 +21,14 @@ jobs:
           username: ubuntu
           key: ${{ secrets.MY_KEY }}
           source: "."
-          target: "/opt/lampp/htdocs/"
+          target: "/home/ubuntu/deploy"
 
-      # - name: Move files to XAMPP
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.MY_HOST }}
-      #     username: ubuntu
-      #     key: ${{ secrets.MY_KEY }}
-      #     script: |
-      #       sudo mkdir -p /opt/lampp/htdocs
-      #       sudo rsync -av --delete /home/ubuntu/deploy/ /opt/lampp/htdocs/
+      - name: Move files to XAMPP
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.MY_HOST }}
+          username: ubuntu
+          key: ${{ secrets.MY_KEY }}
+          script: |
+            sudo mkdir -p /opt/lampp/htdocs
+            sudo rsync -av --delete /home/ubuntu/deploy/ /opt/lampp/htdocs/
